@@ -20,6 +20,7 @@ const App = () => {
         otp: { transport:['sms'] },
         signal: ac.signal
       }).then(otp => {
+        alert(otp.code)
         inputRef.current.value = otp.code;
         if (form) form.submit();
       }).catch(err => {
