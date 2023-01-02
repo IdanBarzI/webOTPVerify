@@ -7,28 +7,26 @@ const App = () => {
   const [otpCode, setOtpCode] = useState("_ _ _ _");
   const inputRef = useRef();
   
-  useEffect(() => {
-
-    if ("OTPCredential" in window) {
+  useEffect(() => {if ('OTPCredential' in window) {
+    window.addEventListener('DOMContentLoaded', e => {
       const ac = new AbortController();
-    
-      navigator.credentials
-        .get({
-          otp: { transport: ["sms"] },
-          signal: ac.signal
-        })
-        .then((otp) => {
-          alert("ok" + otp);
-          setOtpCode(otp);
-          inputRef.current.value = otp
+      const form = inputRef.current.closest('form');
+      if (form) {
+        form.addEventListener('submit', e => {
           ac.abort();
-        })
-        .catch((err) => {
-          alert("error");
-          ac.abort();
-          console.log(err);
         });
-    }
+      }
+      navigator.credentials.get({
+        otp: { transport:['sms'] },
+        signal: ac.signal
+      }).then(otp => {
+        inputRef.current.value = otp.code;
+        if (form) form.submit();
+      }).catch(err => {
+        alert(err)
+      });
+    });
+  }
   },[])
 
   return (
@@ -45,13 +43,8 @@ const App = () => {
     <br/>
     <br/>
     <div style={{textAlign:"center"}}>
-       <h2> Your OTP:	&nbsp;</h2><input
-  type="text"
-  id="otp"
-  name="otp"
-  autocomplete="one-time-code"
-  ref={inputRef}
-/> 
+      <h2> Your OTP:	&nbsp;</h2>
+      <input type="text" autocomplete="one-time-code" inputmode="numeric" ref={inputRef}/>
     </div>
     </div>
   );
