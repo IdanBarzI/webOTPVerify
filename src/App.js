@@ -7,8 +7,8 @@ const App = () => {
   const [otpCode, setOtpCode] = useState("_ _ _ _");
   const inputRef = useRef();
   
-  useEffect(() => {if ('OTPCredential' in window) {
-    window.addEventListener('DOMContentLoaded', e => {
+  useEffect(() => {
+    if ('OTPCredential' in window) {
       const ac = new AbortController();
       const form = inputRef.current.closest('form');
       if (form) {
@@ -25,7 +25,6 @@ const App = () => {
       }).catch(err => {
         alert(err)
       });
-    });
   }
   },[])
 
