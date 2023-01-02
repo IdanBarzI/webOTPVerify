@@ -1,10 +1,11 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,useRef} from 'react';
 
 import './App.css';
 
 const App = () => { 
 
   const [otpCode, setOtpCode] = useState("_ _ _ _");
+  const inputRef = useRef();
   
   useEffect(() => {
 
@@ -17,10 +18,13 @@ const App = () => {
           signal: ac.signal
         })
         .then((otp) => {
+          alert("ok" + otp);
           setOtpCode(otp);
+          inputRef.current.value = otp
           ac.abort();
         })
         .catch((err) => {
+          alert("error" + otp);
           ac.abort();
           console.log(err);
         });
@@ -41,8 +45,13 @@ const App = () => {
     <br/>
     <br/>
     <div style={{textAlign:"center"}}>
-       <h2> Your OTP:	&nbsp;
-        {otpCode}</h2>
+       <h2> Your OTP:	&nbsp;</h2><input
+  type="text"
+  id="otp"
+  name="otp"
+  autocomplete="one-time-code"
+  ref={inputRef}
+/> 
     </div>
     </div>
   );
