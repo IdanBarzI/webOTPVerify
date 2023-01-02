@@ -24,7 +24,7 @@ const App = () => {
           ac.abort();
         })
         .catch((err) => {
-          alert("error" + otp);
+          alert("error");
           ac.abort();
           console.log(err);
         });
