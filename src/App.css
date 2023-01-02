@@ -1,0 +1,12 @@
+.App {
+  text-align: start;
+  background-color: rgba(15, 31, 31, 0.067);
+  height: 100vh;
+  width: 100vw;
+  
+}
+
+h1{
+  text-align: center;
+  color: indigo;
+}
